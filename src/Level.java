@@ -2,13 +2,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Level {
+
     private HashMap<String, Room> rooms;
     private ArrayList<Creature> creatures;
 
     public Level() {
         rooms = new HashMap<>();
         creatures = new ArrayList<>();
-        setupLevel();
+        this.setupLevel();
     }
 
     public Room getRoom(String room) {
@@ -22,6 +23,10 @@ public class Level {
 
     public void addRoom(Room room) {
         rooms.put(room.getName(), room);
+    }
+
+    public void addRoom(String name) {
+        addRoom(new Room(name, ""));
     }
 
     //Connect rooms together
@@ -47,7 +52,7 @@ public class Level {
     }
 
     public void moveCreatures() {
-        for (Creature creature: creatures){
+        for (Creature creature : creatures) {
             creature.move();
         }
     }
@@ -61,6 +66,14 @@ public class Level {
         this.addRoom("dungeon");
         this.addRoom("library");
         this.addRoom("gallery");
+        this.addRoom("living room");
+        this.addRoom("classroom");
+        this.addRoom("store");
+        this.addRoom("office");
+        this.addRoom("basement");
+        this.addRoom("attic");
+        this.addRoom("sunroom");
+        this.addRoom("gym");
 
         this.addUndirectedEdge("hall", "master bedroom");
         this.addUndirectedEdge("hall", "guest bedroom");
@@ -69,7 +82,46 @@ public class Level {
         this.addUndirectedEdge("hall", "gallery");
         this.addUndirectedEdge("master bedroom", "closet");
         this.addUndirectedEdge("master bedroom", "library");
+        this.addUndirectedEdge("hall", "gallery");
+        this.addUndirectedEdge("hall", "living room");
+        this.addUndirectedEdge("hall", "classroom");
+        this.addUndirectedEdge("hall", "store");
+        this.addUndirectedEdge("hall", "office");
+        this.addUndirectedEdge("hall", "attic");
+        this.addUndirectedEdge("hall", "gym");
+        this.addUndirectedEdge("hall", "sunroom");
 
+        this.addDirectedEdge("hall", "dungeon");
+        this.addDirectedEdge("closet", "dungeon");
+        this.addDirectedEdge("attic", "dungeon");
+        this.addDirectedEdge("basement", "dungeon");
+
+        this.makeAllCreatures();
+
+        this.addAllItems();
+    }
+
+    private void makeAllCreatures() {
+        for (int i = 0; i < 4; i++) {
+            creatures.add(new Chicken(this.getRoom("hall"), "chicken" + i, "A Chicken"));
+        }
+
+        creatures.add(new PopStar(getRoom("dungeon"), "Bunty", "A Bunty that plays fatal music"));
+        creatures.add(new Wumpus(getRoom("dungeon"), "Wumpus", "The creature you're trying to hunt"));
+    }
+
+    private void addAllItems() {
+        this.getRoom("closet").addItem("umbrella");
+
+        this.getRoom("library").addItem("book");
+
+        this.getRoom("bathroom").addItem("sword");
+
+        this.getRoom("sunroom").addItem("spear of destiny");
+
+        this.getRoom("gym").addItem("shield of valor");
+
+        this.getRoom("office").addItem("printer of satisfaction");
     }
 
 }

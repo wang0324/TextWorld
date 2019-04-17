@@ -1,6 +1,17 @@
-public interface Command {
+public abstract class Command {
 
-    public void init(String userString);
+    protected String name;
 
-    public boolean execute();
+    public void init(String userString) {
+        name = getName(userString);
+    }
+
+    private String getName(String input) {
+        if (input.split(" ").length > 1) {
+            return input.substring(input.indexOf(" ") + 1);
+        }
+        return "";
+    }
+
+    public abstract boolean execute();
 }

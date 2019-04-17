@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-
-public class Wumpus extends Creature{
+public class Wumpus extends Creature {
 
     public Wumpus(Room room, String name, String description) {
         super(room, name, description);
@@ -13,13 +11,23 @@ public class Wumpus extends Creature{
     private boolean moveAwayFromPlayer() {
         Room playerRoom = Main.player.getCurrentRoom();
 
-        if (isPlayerNearRoom(playerRoom, this.getCurrentRoom())) {
+        if (isPlayerNearRoom(this.getCurrentRoom())) {
             runFromPlayer();
             return true;
         }
 
-        moveToRoom(this.getCurrentRoom().getRandomNeighbor());
+        moveToRoom(this.getRandomNeighbor());
         return false;
+    }
+
+    private void runFromPlayer() {
+        for (Room neighbor : this.getCurrentRoom().getNeighbors()) {
+            if (!isPlayerNearRoom(neighbor)) {
+                moveToRoom(neighbor);
+                return;
+            }
+        }
+        moveToRoom(this.getRandomNeighbor());
     }
 
 }

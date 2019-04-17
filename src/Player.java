@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 
 public class Player {
+
     private String name, description;
 
     private Room currentRoom;
-    
-    private ArrayList <Item> inventory;
+
+    private ArrayList<Item> inventory;
 
     public Player(Room currentRoom, String name, String description) {
         this.name = name;
@@ -62,8 +63,8 @@ public class Player {
 
     public boolean dropItem(String name) {
         Item item = removeItem(name);
-        if(item == null) return false;
-        getCurrentRoom().addItem(item);
+        if (item == null) return false;
+        this.getCurrentRoom().addItem(item);
         return true;
     }
 
@@ -82,19 +83,19 @@ public class Player {
 
     public void displayInventory() {
         System.out.println("Items in Inventory: ");
-        if (inventory.size() == 0) {
-            System.out.println("(bag is empty)");
-            return;
-        }
         String result = "";
         for (Item item : inventory) {
             result += item.getName() + ": " + item.getDescription() + "\n";
         }
-        if (inventory.length() > 1) inventory = inventory.substring(0, inventory.length() - 1);
-        System.out.println(inventory);
+        System.out.println(result);
     }
 
-    public void displayCommands() {
-
+    public boolean moveToRoom(String name) {
+        Room room = currentRoom.getNeighbor(name);
+        if (room != null) {
+            this.setCurrentRoom(room);
+            return true;
+        }
+        return false;
     }
 }

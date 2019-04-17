@@ -46,18 +46,19 @@ public abstract class Creature {
         this.currentRoom.removeCreature(this);
         this.currentRoom = room;
         currentRoom.addCreature(this);
-        System.out.println("Moved " +  name + " to " + currentRoom.getName());
+        System.out.println("Moved " + name + " to " + currentRoom.getName());
     }
 
-    public boolean isPlayerNearRoom(Room playerRoom, Room creatureRoom) {
+    public boolean isPlayerNearRoom(Room creatureRoom) {
+        Room playerRoom = Main.player.getCurrentRoom();
         ArrayList<Room> playerNeighbors1 = playerRoom.getNeighbors();
 
-        for (Room neighbor:playerNeighbors1) {
+        for (Room neighbor : playerNeighbors1) {
             if (neighbor.equals(creatureRoom)) {
                 return true;
             }
-            ArrayList <Room> playerNeighbors2 = neighbor.getNeighbors();
-            for (Room neighbor2:playerNeighbors2) {
+            ArrayList<Room> playerNeighbors2 = neighbor.getNeighbors();
+            for (Room neighbor2 : playerNeighbors2) {
                 if (neighbor2.equals(creatureRoom)) {
                     return true;
                 }

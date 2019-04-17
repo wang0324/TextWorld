@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Room {
-
     private String name, description;
     private HashMap<String, Room> neighbors;
     private ArrayList<Item> items;
@@ -32,6 +31,10 @@ public class Room {
         this.description = description;
     }
 
+    public void addNeighbor(Room neighbor) {
+        neighbors.put(neighbor.getName(), neighbor);
+    }
+
     public Room getNeighbor(String name) {
         return neighbors.get(name);
     }
@@ -45,24 +48,9 @@ public class Room {
     }
 
     public Room getRandomNeighbor() {
-        ArrayList<Room> list = convertMaptoArrayList();
-        return list.get((int)(Math.random() * list.size()));
+        ArrayList<Room> list = getNeighbors();
+        return list.get((int) (Math.random() * list.size()));
     }
-
-    public Room getRandomNeighbor(ArrayList <Room> roomsToAvoid) {
-        for (Room neighbor:) {
-
-        }
-    }
-
-    private ArrayList<Room> convertMaptoArrayList() {
-        ArrayList<Room> arr = new ArrayList<>();
-        for (String key : neighbors.keySet()) {
-            arr.add(neighbors.get(key));
-        }
-        return arr;
-    }
-
 
     public void addCreature(Creature creature) {
         creatures.add(creature);
@@ -74,8 +62,8 @@ public class Room {
 
     public String getCreatureNames() {
         String result = "";
-        for (String name : creatures.keySet()) {
-            result += name + ", ";
+        for (Creature c : creatures) {
+            result += c.getName() + " ";
         }
         return result;
     }
@@ -92,32 +80,27 @@ public class Room {
         items.add(item);
     }
 
-    public void removeItem(String item) {
-        items.remove(item);
+    public void addItem(String name) {
+        items.add(new Item(name, ""));
     }
 
-    public boolean containsNeighbor(Room neighbor) {
-        if (neighbors.get(neighbor.getName()) == null) {
-            return false;
+    public Item removeItem(String name) {
+        for (Item item : items) {
+            if (item.getName().equals(name)) {
+                items.remove(item);
+                return item;
+            }
         }
-        return true;
+        return null;
     }
-
-    public boolean containsNeighbor(String name) {
-        for (String neighbor : neighbors.keySet()) {
-            if (name.equals(neighbor)) return true;
-        }
-        return false;
-    }
-
 
     public ArrayList<Room> getNeighbors() {
         return hashMapToArrayList(neighbors);
     }
 
-    private ArrayList<Room> hashMapToArrayList(HashMap<String,Room> neighbors) {
-        ArrayList <Room> neighborList = new ArrayList<>();
-        for (String name:neighbors.keySet()) {
+    private ArrayList<Room> hashMapToArrayList(HashMap<String, Room> neighbors) {
+        ArrayList<Room> neighborList = new ArrayList<>();
+        for (String name : neighbors.keySet()) {
             neighborList.add(neighbors.get(name));
         }
         return neighborList;
