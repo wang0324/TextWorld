@@ -19,7 +19,7 @@ public class Main {
 
             System.out.println("You are in the " + player.getCurrentRoom().getName());
             System.out.println(player.getCurrentRoom().getCreatureNames());
-            System.out.println("You can go to " + player.getCurrentRoom().getNeighbors());
+            System.out.println("You can go to " + player.getCurrentRoom().getNeighborNames());
 
             System.out.print("What would you like to do? >");
             response = in.nextLine();
@@ -38,6 +38,8 @@ public class Main {
         level = new Level();
 
         player = new Player(level.getRoom("hall"), "Kevin", "");
+
+        commands = new HashMap<>();
 
         commands.put("go", new GoCommand()); // Moves Player to room
         commands.put("add", new AddCommand()); // Adds item to room

@@ -12,6 +12,8 @@ public class Player {
         this.name = name;
         this.description = description;
         this.currentRoom = currentRoom;
+
+        inventory = new ArrayList<>();
     }
 
     public String getName() {
